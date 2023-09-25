@@ -88,13 +88,13 @@ contract SwapRouter {
             "Approval failed"
         );
 
-        uint24 feeTiers = calculateUniswapV3FeeTier(tokenIn, tokenOut);
+        uint24 fee = calculateUniswapV3FeeTier(tokenIn, tokenOut);
         // Define the params for the V3 swap
         ISwapRouter.ExactInputSingleParams memory params = ISwapRouter
             .ExactInputSingleParams({
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
-                fee: feeTiers,
+                fee: fee,
                 recipient: msg.sender,
                 deadline: block.timestamp + 300,
                 amountIn: amountIn,

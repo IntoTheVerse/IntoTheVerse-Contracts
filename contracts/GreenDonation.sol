@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: UNLICENSED
-pragma solidity >=0.8.20;
+pragma solidity >=0.8.19;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
@@ -7,6 +7,8 @@ import "erc721a/contracts/ERC721A.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./TreeContract.sol";
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
+import "./RetirementCertificates.sol";
 
 contract GreenDonation is Ownable {
     using EnumerableSet for EnumerableSet.UintSet;
@@ -31,6 +33,15 @@ contract GreenDonation is Ownable {
     //key is keccack256(address, tokenAddress)
     mapping(bytes => uint256) public stakes;
     mapping(address => User) internal users;
+
+    // Uniswap Router
+    address public uniswapRouterAddress; // Replace with actual address
+    IUniswapV2Router02 uniswapRouter = IUniswapV2Router02(uniswapRouterAddress);
+
+    // RetirementCertificates contract
+    address public retirementCertificatesAddress; // Replace with actual address
+    RetirementCertificates retirementCertificates = RetirementCertificates(retirementCertificatesAddress);
+
 
     constructor(
         address _treeContractAddress,
@@ -119,6 +130,11 @@ contract GreenDonation is Ownable {
         users[msg.sender].unclaimedRewards = 0;
         users[msg.sender].lastSnapshot = block.timestamp;
         //TODO a percentage needs to go to TOUCAN PROTOCOL
+        uint256 amountToRetire = (rewards * 10) / 100; // 10% of rewards
+        swapTokensForTCO2(amountToRetire);
+        retireTCO2Tokens(amountToRetire);
+        mintRetirementCertificate();
+
         IERC20(msg.sender).transfer(msg.sender, rewards);
     }
 
@@ -151,5 +167,31 @@ contract GreenDonation is Ownable {
 
         delete users[msg.sender];
     }
-    
+
+    function swapTokensForTCO2(uint256 amount) internal {
+        address[] memory path = new address[](2);
+        path[0] = msg.sender; // User's token
+        path[1] = address(TCO2); // TCO2 token address
+
+        uniswapRouter.swapExactTokensForTokens(
+            amount,
+            0, // Accept any amount of TCO2
+            path,
+            address(this),
+            block.timestamp
+        );
+    }
+
+    function retireTCO2Tokens(uint256 amount) internal {
+        TCO2.retire(amount); // Replace with actual function if different
+    }
+
+    function mintRetirementCertificate() internal {
+        retirementCertificates.mintCertificate(
+            msg.sender,
+            beneficiary,
+            "Retirement Message",
+            retirementEventIds
+        );
+    }
 }
