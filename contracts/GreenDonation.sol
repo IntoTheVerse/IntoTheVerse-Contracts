@@ -140,9 +140,8 @@ contract GreenDonation is Ownable {
 
         EnumerableSet.UintSet storage userTrees = users[msg.sender].trees;
         for (uint256 i = 0; i < userTrees.length(); i++) {
-            uint256 lastWatered = TreeContract(treeContractAddress).getLastWatered(
-                userTrees.at(i)
-            );
+            uint256 lastWatered = TreeContract(treeContractAddress)
+                .getLastWatered(userTrees.at(i));
             if (block.timestamp - lastWatered > 1 weeks) {
                 TreeContract(treeContractAddress).downgradeTree(
                     userTrees.at(i)
@@ -152,4 +151,5 @@ contract GreenDonation is Ownable {
 
         delete users[msg.sender];
     }
+    
 }
