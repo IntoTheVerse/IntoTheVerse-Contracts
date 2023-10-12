@@ -1,4 +1,4 @@
-# Sample Hardhat Project
+# IntoTheVerse Contracts
 
 ![image](https://github.com/IntoTheVerse/IntoTheVerse-Contracts/assets/43913734/c7875205-8547-48ce-89e9-24389fb0355c)
 
