@@ -44,7 +44,7 @@ Setting up the development environment to deploy and interact with the smart con
 2. **Navigate to Project Folder**: Open a terminal and navigate to the project folder.
 
     ```bash
-    cd eco-blockchain
+    cd IntoTheVerse-Contracts
     ```
 
 3. **Install Node.js Packages**: Use npm to install the required Node.js packages.
