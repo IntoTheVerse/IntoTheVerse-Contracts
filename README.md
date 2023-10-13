@@ -14,8 +14,6 @@ REPORT_GAS=true npx hardhat test
 npx hardhat node
 npx hardhat run scripts/deploy.ts
 ```
-# IntoTheVerse-Contracts
-
 
 # IntoTheVerse-Contracts Smart Contracts
 
@@ -28,7 +26,40 @@ This repository contains smart contracts for the IntoTheVerse-Contracts project 
 3. **Marketplace**: A marketplace contract for auctioning and bidding of trees (To be implemented).
 4. **SwapRouter**: A swapping router for tokens, supporting both Uniswap V3 and Ubeswap V2.
 
-Each contract serves a different role in the ecosystem and is built using Solidity. The project leverages OpenZeppelin libraries for standard functionalities like ownership and ERC standards.
+
+## Detailed Contract Descriptions
+
+### TreeContract
+
+This contract is an NFT (Non-Fungible Token) representing a tree. Each tree has a `level` and a `lastWatered` timestamp. It uses ERC721A standard from OpenZeppelin and has the following functionalities:
+
+- **Mint**: Allows users to mint new trees.
+- **Watering**: Trees can be watered to increase their levels.
+- **Decay**: If a tree is not watered within a specified period, its level decreases.
+
+### GreenDonation
+
+This is a staking contract where users can stake authorized ERC20 tokens to nurture a tree (NFT). The staking or 'nurturing' increases the level of the tree and provides a daily yield to the staker. Key features include:
+
+- **Nurture Tree**: Stake tokens to water a tree.
+- **Yield**: Daily yield based on the level of the tree.
+- **Claim Rewards**: Users can claim their yield.
+
+### Marketplace
+
+This contract (to be implemented) will handle the auctioning, bidding, and trading of trees. It will have functionalities like:
+
+- **Auction**: List a tree for auction.
+- **Bid**: Place bids on listed trees.
+- **Offer**: Make an offer for a tree.
+  
+### SwapRouter
+
+A router contract that allows users to perform token swaps. It supports Uniswap V3 and Ubeswap V2 and will also integrate MENTO protocol. Features are:
+
+- **Token Swap**: Swap tokens based on the user's choice of DEX.
+- **Fee Calculation**: Calculates the optimal fee tier for Uniswap V3 swaps.
+
 
 
 ## Installation
@@ -38,7 +69,7 @@ Setting up the development environment to deploy and interact with the smart con
 1. **Clone the Repository**: Clone the IntoTheVerse-Contracts repository to your local machine.
 
     ```bash
-    git clone https://github.com/IntoTheVerse/IntoTheVerse-Contracts
+    git clone <repository_url>
     ```
 
 2. **Navigate to Project Folder**: Open a terminal and navigate to the project folder.
