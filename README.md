@@ -38,7 +38,7 @@ Setting up the development environment to deploy and interact with the smart con
 1. **Clone the Repository**: Clone the IntoTheVerse-Contracts repository to your local machine.
 
     ```bash
-    git clone [<repository_url>](https://github.com/IntoTheVerse/IntoTheVerse-Contracts)
+    git clone https://github.com/IntoTheVerse/IntoTheVerse-Contracts
     ```
 
 2. **Navigate to Project Folder**: Open a terminal and navigate to the project folder.
